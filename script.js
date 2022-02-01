@@ -4,23 +4,71 @@ var headerE1 = $('#header');
 var resultEl = $('#results-div');
 
 
-function answer(event){
+function answer(event) {
   event.preventDefault();
-var user_Choice = $(event.target)
-if (user_Choice[0].innerText === answer_bank[index]) {
-  resultEl.append(
-    "<h3> Correct</h3>"
-  )
+  var user_Choice = $(event.target)
+  if (user_Choice[0].innerText === answer_bank[index]) {
+    resultEl.append(
+      "<h3> Correct</h3>"
+    )
+  }
+  else {
+    resultEl.append(
+      "<h3> Incorrect</h3>"
+    )
+    time = time - 10
+  }
+  nextQuestion()
 }
+function nextQuestion() {
+  index = index + 1
+  $('#click-to-start-div').children().remove();
+  resultEl.children().eq(0).remove();
+  resultEl.children().eq(0).remove();
+  resultEl.children().eq(0).remove();
+  resultEl.children().eq(0).remove();
+  if (index<question_bank.length) {
+    writeQuestion();
+  }
+  else {
+    gameOver()
+  }
+  setTimeout(function(){
+    resultEl.children().eq(0).remove();
+  },2000)
 }
+function gameOver() {
+  clearInterval(x) 
+  score = time
+  headerE1.append("<h2> Finished </h2>")
+  $('#click-to-start-div').append("<p> Your Score Was " + score + "</p>")
+  resultEl.append("<p>Enter Your Initials</p>")
+  resultEl.append("<form><input/></form>")
+  $("form").on("submit", function(event){
+    event.preventDefault()
+    localStorage.setItem($(event.target).children("input").val(), score)
+    headerE1.children().eq(2).html("Highscore Page")
+    $('#click-to-start-div').children().eq(0).remove()
+    for(var i = 0;i<localStorage.length;i++){
+      $('#List').append("<li class=\"w-100\">"+ localStorage.key(i)+": "+ localStorage.getItem(localStorage.key(i))+"</li>")
+    }
+    resultEl.children().remove()
+    resultEl.append("<button> clear </button>")
+    resultEl.on("click","button",function(){
+      localStorage.clear()
+      location.reload()
+    }
+    )
+  })
+}
+
 function nextFunc(event) {
-  console.log("Blah");
   headerE1.children().eq(2).remove();
   headerE1.children().eq(1).remove();
   start_btn_El.remove();
   writeQuestion();
   start();
-  resultEl.on("click","button",answer)
+  resultEl.on("click", "button", answer)
 }
 var index = 0
 
@@ -38,6 +86,7 @@ function writeQuestion() {
 }
 var time = 60
 var x 
+var score
 function start() {
   var countdown = $("#timer")
   countdown.text(time)
