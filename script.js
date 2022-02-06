@@ -29,6 +29,7 @@ var time = 60;
 var index = 0
 var score = question_bank.length;
 var timerInterval;
+var removeResultInterval;
 
 function answer(event) {
   removeResult();
@@ -53,24 +54,29 @@ function answer(event) {
 }
 
 function nextQuestion() {
-  index = index + 1
+  ++index;
+
   $('#click-to-start-div').children().remove();
   questionsEl.children().eq(0).remove();
   questionsEl.children().eq(0).remove();
   questionsEl.children().eq(0).remove();
   questionsEl.children().eq(0).remove();
+  
   if (index<question_bank.length) {
     writeQuestion();
   } else {
     gameOver();
   }
 
-  // setTimeout(function() {
-  //   removeResult();
-  // }, 2000);
+  removeResultInterval = setTimeout(function() {
+    removeResult();
+  }, 5000);
 }
 
 function removeResult() {
+  clearInterval(removeResultInterval);
+  removeResultInterval = undefined;
+
   resultEl.removeClass("new-result");
   resultEl.children().eq(0).remove();
 }
@@ -79,7 +85,7 @@ function gameOver() {
   clearInterval(timerInterval);
   headerE1.append("<h2> Finished </h2>");
   $('#click-to-start-div').append("<p> Your Score Was " + score + "</p>");
-  resultEl.append("<p>Enter Your Initials</p>");
+  resultEl.append("<p>Enter Your Initials  </p>");
   resultEl.append("<form><input/></form>");
   $("form").on("submit", function(event){
     event.preventDefault()
@@ -106,10 +112,10 @@ function start(event) {
   writeQuestion();
   
   var countdown = $("#timer");
-  countdown.text(time);
+  countdown.text("Timer: " + time);
   timerInterval = setInterval (function() {
     --time;
-    countdown.text(time);
+    countdown.text("Timer: " + time);
   }, 1000);
 
   questionsEl.on("click", "button", answer);

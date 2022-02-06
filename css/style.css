@@ -1,10 +1,15 @@
+.body {
+    margin: 50px 100px;
+}
+
 .main {
-    margin: 100px;
+    margin: 50px 0px;
 }
 
 .new-result {
     border-top: 2px solid gray;
     margin-top: 40px;
+    padding: 20px;
 }
 
 .correct-answer  {
