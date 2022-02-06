@@ -1,0 +1,16 @@
+.main {
+    margin: 100px;
+}
+
+.new-result {
+    border-top: 2px solid gray;
+    margin-top: 40px;
+}
+
+.correct-answer  {
+    color: green;
+}
+
+.wrong-answer  {
+    color: red;
+}

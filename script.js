@@ -2,6 +2,7 @@
 var start_btn_El = $('#start-btn');
 var textEl = $('#starter-text');
 var headerE1 = $('#header');
+var questionsEl = $('#questions-div');
 var resultEl = $('#results-div');
 
 // quiz global vars
@@ -30,15 +31,19 @@ var score = question_bank.length;
 var timerInterval;
 
 function answer(event) {
+  removeResult();
+
   event.preventDefault();
-  var user_Choice = $(event.target)
+  var user_Choice = $(event.target);
+
+  resultEl.addClass("new-result");
   if (user_Choice[0].innerText === answer_bank[index]) {
     resultEl.append(
-      "<h3> Correct</h3>"
+      "<h3 class='correct-answer'>Correct</h3>"
     );
   } else {
     resultEl.append(
-      "<h3> Incorrect</h3>"
+      "<h3 class='wrong-answer'>Incorrect</h3>"
     )
     time = time - 10;
     score -= 1;
@@ -50,19 +55,24 @@ function answer(event) {
 function nextQuestion() {
   index = index + 1
   $('#click-to-start-div').children().remove();
-  resultEl.children().eq(0).remove();
-  resultEl.children().eq(0).remove();
-  resultEl.children().eq(0).remove();
-  resultEl.children().eq(0).remove();
+  questionsEl.children().eq(0).remove();
+  questionsEl.children().eq(0).remove();
+  questionsEl.children().eq(0).remove();
+  questionsEl.children().eq(0).remove();
   if (index<question_bank.length) {
     writeQuestion();
   } else {
     gameOver();
   }
 
-  setTimeout(function() {
-    resultEl.children().eq(0).remove();
-  }, 2000);
+  // setTimeout(function() {
+  //   removeResult();
+  // }, 2000);
+}
+
+function removeResult() {
+  resultEl.removeClass("new-result");
+  resultEl.children().eq(0).remove();
 }
 
 function gameOver() {
@@ -89,13 +99,20 @@ function gameOver() {
   })
 }
 
-function nextFunc(event) {
+function start(event) {
   headerE1.children().eq(2).remove();
   headerE1.children().eq(1).remove();
   start_btn_El.remove();
   writeQuestion();
-  start();
-  resultEl.on("click", "button", answer)
+  
+  var countdown = $("#timer");
+  countdown.text(time);
+  timerInterval = setInterval (function() {
+    --time;
+    countdown.text(time);
+  }, 1000);
+
+  questionsEl.on("click", "button", answer);
 }
 
 function writeQuestion() {
@@ -103,7 +120,7 @@ function writeQuestion() {
   console.log(stringSplit)
   $('#click-to-start-div').append(
   "<h2 class=\"d-flex justify-content-center\">" + stringSplit[0] + "</h2>")
-  resultEl.append(
+  questionsEl.append(
     "<button>" + stringSplit[1] + "</button>",
     "<button>" + stringSplit[2] + "</button>",
     "<button>" + stringSplit[3] + "</button>",
@@ -111,18 +128,9 @@ function writeQuestion() {
   )
 }
 
-function start() {
-  var countdown = $("#timer")
-  countdown.text(time)
-  timerInterval = setInterval (function(){
-    time = time-1 
-    countdown.text(time)
-  }, 1000);
-}
-
 const splitLines = str => str.split("/n");
 console.log('Original string:');
 console.log('This\nis a\nmultiline\nstring.\n');
 console.log(splitLines('This\nis a\nmultiline\nstring.\n'));
 
-start_btn_El.on("click",nextFunc)
+start_btn_El.on("click", start);
