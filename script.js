@@ -101,8 +101,8 @@ function gameOver() {
       $('#highscore-list-div').append("<li class=\"w-100\">"+ localStorage.key(i)+": "+ localStorage.getItem(localStorage.key(i))+"</li>");
     }
     highscoreEntryEl.children().remove();
-    highscoreEntryEl.append("<button id='reset-quiz'>Go Back</button>");
-    highscoreEntryEl.append("<button id='clear-highscores'>Clear Highscores</button>");
+    highscoreEntryEl.append("<button class='btn btn-primary btn-margin' id='reset-quiz'>Go Back</button>");
+    highscoreEntryEl.append("<button class='btn btn-primary btn-margin' id='clear-highscores'>Clear Highscores</button>");
     highscoreEntryEl.on("click", "#reset-quiz", function() {
       location.reload();
     });
@@ -138,13 +138,12 @@ function start(event) {
 function writeQuestion() {
   var stringSplit = question_bank[index].string_Q.split("/n");
   console.log(stringSplit)
-  $('#click-to-start-div').append(
-  "<h2 class=\"d-flex justify-content-center\">" + stringSplit[0] + "</h2>")
+  $('#click-to-start-div').append("<h2 class='d-flex justify-content-center'>" + stringSplit[0] + "</h2>")
   questionsEl.append(
-    "<button>" + stringSplit[1] + "</button>",
-    "<button>" + stringSplit[2] + "</button>",
-    "<button>" + stringSplit[3] + "</button>",
-    "<button>" + stringSplit[4] + "</button>",
+    "<button class='btn btn-primary btn-margin'>" + stringSplit[1] + "</button>",
+    "<button class='btn btn-primary btn-margin'>" + stringSplit[2] + "</button>",
+    "<button class='btn btn-primary btn-margin'>" + stringSplit[3] + "</button>",
+    "<button class='btn btn-primary btn-margin'>" + stringSplit[4] + "</button>",
   )
 }
 
