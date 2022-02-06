@@ -27,7 +27,7 @@ var answer_bank = ["(d)Ctrl-C","(b)For","(c))Variable","(b)Infinite loop","(b)Wh
 
 var time = 60;
 var index = 0
-var score = question_bank.length;
+var score = 0;
 var timerInterval;
 var removeResultInterval;
 
@@ -42,26 +42,27 @@ function answer(event) {
     resultEl.append(
       "<h3 class='correct-answer'>Correct</h3>"
     );
+    ++score;
   } else {
     resultEl.append(
       "<h3 class='wrong-answer'>Incorrect</h3>"
     )
-    time = time - 10;
-    score -= 1;
+    time -= 10;
   }
 
   nextQuestion();
 }
 
+function clearQuestions() {
+  $('#click-to-start-div').children().remove();
+  questionsEl.children().remove();
+}
+
 function nextQuestion() {
   ++index;
-
-  $('#click-to-start-div').children().remove();
-  questionsEl.children().eq(0).remove();
-  questionsEl.children().eq(0).remove();
-  questionsEl.children().eq(0).remove();
-  questionsEl.children().eq(0).remove();
   
+  clearQuestions();
+
   if (index<question_bank.length) {
     writeQuestion();
   } else {
@@ -70,7 +71,7 @@ function nextQuestion() {
 
   removeResultInterval = setTimeout(function() {
     removeResult();
-  }, 5000);
+  }, 2000);
 }
 
 function removeResult() {
@@ -83,26 +84,29 @@ function removeResult() {
 
 function gameOver() {
   clearInterval(timerInterval);
-  headerE1.append("<h2> Finished </h2>");
+  clearQuestions();
+
+  headerE1.append("<h2 class='d-flex justify-content-center'> Finished </h2>");
   $('#click-to-start-div').append("<p> Your Score Was " + score + "</p>");
-  resultEl.append("<p>Enter Your Initials  </p>");
+
+  // resultEl.addClass('d-flex justify-content-between');
+  resultEl.append("<p class='initial-title'>Enter Your Initials</p>");
   resultEl.append("<form><input/></form>");
-  $("form").on("submit", function(event){
-    event.preventDefault()
+  $("form").on("submit", function(event) {
+    event.preventDefault();
     localStorage.setItem($(event.target).children("input").val(), score);
     headerE1.children().eq(2).html("Highscore Page");
     $('#click-to-start-div').children().eq(0).remove();
-    for(var i = 0;i<localStorage.length;i++){
+    for(var i = 0; i < localStorage.length; i++) {
       $('#List').append("<li class=\"w-100\">"+ localStorage.key(i)+": "+ localStorage.getItem(localStorage.key(i))+"</li>");
     }
-    resultEl.children().remove()
-    resultEl.append("<button> clear </button>")
-    resultEl.on("click","button",function(){
-      localStorage.clear()
-      location.reload()
-    }
-    )
-  })
+    resultEl.children().remove();
+    resultEl.append("<button> clear </button>");
+    resultEl.on("click", "button", function() {
+      localStorage.clear();
+      location.reload();
+    });
+  });
 }
 
 function start(event) {
@@ -115,7 +119,13 @@ function start(event) {
   countdown.text("Timer: " + time);
   timerInterval = setInterval (function() {
     --time;
-    countdown.text("Timer: " + time);
+
+    if (time <= 0) {
+      countdown.text("Timer: 0");
+      gameOver();
+    } else {
+      countdown.text("Timer: " + time);
+    }
   }, 1000);
 
   questionsEl.on("click", "button", answer);
