@@ -24,7 +24,7 @@ var question_bank = [
            + "(a)How the program will accomplish the task/n(b)What the task is that the program must perform/n(c)How to divide the task into subtasks/n(d)How to test the program when it is done/n"
   }
 ]
-var answer_bank = ["(d)Ctrl-C","(b)For","(c))Variable","(b)Infinite loop","(b)What the task is that the program must perform"];
+var answer_bank = ["(d)Ctrl-C","(b)For","(c)Variable","(b)Infinite loop","(b)What the task is that the program must perform"];
 
 var time = 60;
 var index = 0
