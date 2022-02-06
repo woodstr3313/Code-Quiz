@@ -3,6 +3,7 @@ var start_btn_El = $('#start-btn');
 var textEl = $('#starter-text');
 var headerE1 = $('#header');
 var questionsEl = $('#questions-div');
+var highscoreEntryEl = $('#highscore-entry-div');
 var resultEl = $('#results-div');
 
 // quiz global vars
@@ -89,22 +90,25 @@ function gameOver() {
   headerE1.append("<h2 class='d-flex justify-content-center'> Finished </h2>");
   $('#click-to-start-div').append("<p> Your Score Was " + score + "</p>");
 
-  // resultEl.addClass('d-flex justify-content-between');
-  resultEl.append("<p class='initial-title'>Enter Your Initials</p>");
-  resultEl.append("<form><input/></form>");
+  highscoreEntryEl.append("<p class='initial-title'>Enter Your Initials</p>");
+  highscoreEntryEl.append("<form><input/></form>");
   $("form").on("submit", function(event) {
     event.preventDefault();
     localStorage.setItem($(event.target).children("input").val(), score);
     headerE1.children().eq(2).html("Highscore Page");
     $('#click-to-start-div').children().eq(0).remove();
     for(var i = 0; i < localStorage.length; i++) {
-      $('#List').append("<li class=\"w-100\">"+ localStorage.key(i)+": "+ localStorage.getItem(localStorage.key(i))+"</li>");
+      $('#highscore-list-div').append("<li class=\"w-100\">"+ localStorage.key(i)+": "+ localStorage.getItem(localStorage.key(i))+"</li>");
     }
-    resultEl.children().remove();
-    resultEl.append("<button> clear </button>");
-    resultEl.on("click", "button", function() {
-      localStorage.clear();
+    highscoreEntryEl.children().remove();
+    highscoreEntryEl.append("<button id='reset-quiz'>Go Back</button>");
+    highscoreEntryEl.append("<button id='clear-highscores'>Clear Highscores</button>");
+    highscoreEntryEl.on("click", "#reset-quiz", function() {
       location.reload();
+    });
+    highscoreEntryEl.on("click", "#clear-highscores", function() {
+      localStorage.clear();
+      $('#highscore-list-div').remove();
     });
   });
 }
