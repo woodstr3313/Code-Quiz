@@ -4,4 +4,3 @@ This application was created to test users on basic computer science questions. 
 -Travis Woods
 
 ![imagelink](images/Code-Quiz.png)
-The site is published at https://woodstr3313.github.io/Code-Quiz/

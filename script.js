@@ -14,7 +14,7 @@ var question_bank = [
   { "string_Q" : "Jordan needs to execute a section of code ten times within a program. Compare the selection structures below and select which one meets the needs identified./n"
             + "(a)If-Else/n(b)For/n(c)While/n(d)If/n"
   }, 
-  { "string_Q" : "Jeff has just constructed her first for loop within the Java language.  Which of the following is not a required part of a for loop?/n"
+  { "string_Q" : "Jeff has just constructed his first for loop within the Java language.  Which of the following is not a required part of a for loop?/n"
             + "(a)Initialization/n(b)Condition/n(c)Variable/n(d)) increment/n"
   },
   { "string_Q" : "A loop that never ends is referred to as a(n)_________./n"
