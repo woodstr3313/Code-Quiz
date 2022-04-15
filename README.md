@@ -3,4 +3,4 @@ This application was created to test users on basic computer science questions. 
 
 -Travis Woods
 
-![imagelink](images/Code-Quiz.png)
+![imagelink](./images/Coding%20Quiz.jpg)
